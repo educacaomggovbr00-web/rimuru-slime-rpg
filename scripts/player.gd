@@ -4,6 +4,10 @@ signal attack_pressed
 signal absorb_pressed
 signal stats_changed
 
+const SLIME_IDLE = preload("res://assets/characters/slime_idle.svg")
+const SLIME_BLINK = preload("res://assets/characters/slime_blink.svg")
+var _slime_sprite: Sprite2D
+
 const SPEED := 230.0
 const DASH_SPEED := 500.0
 var touch_direction := Vector2.ZERO
@@ -25,6 +29,12 @@ func _ready() -> void:
 	circle.radius = 23.0
 	hitbox.shape = circle
 	add_child(hitbox)
+	_slime_sprite = Sprite2D.new()
+	_slime_sprite.texture = SLIME_IDLE
+	_slime_sprite.position = Vector2(0, -9)
+	_slime_sprite.scale = Vector2.ONE * 0.52
+	_slime_sprite.z_index = 1
+	add_child(_slime_sprite)
 	var camera := Camera2D.new()
 	camera.zoom = Vector2(1.12, 1.12)
 	camera.position_smoothing_enabled = true
@@ -55,6 +65,16 @@ func _physics_process(delta: float) -> void:
 		facing = direction.normalized()
 	velocity = direction * (DASH_SPEED if _dash_timer > 0 else SPEED)
 	move_and_slide()
+	# Gentle squash-and-stretch makes the imported character art feel alive.
+	var moving := direction.length_squared() > 0.02
+	var motion_rate := 11.0 if moving else 3.8
+	var bounce := sin(_time * motion_rate)
+	var stretch := bounce * (0.042 if moving else 0.018)
+	_slime_sprite.scale = Vector2(0.52 * (1.0 + stretch), 0.52 * (1.0 - stretch))
+	_slime_sprite.position.y = -9.0 + bounce * (2.8 if moving else 1.5)
+	_slime_sprite.rotation = sin(_time * 8.0) * 0.045 if moving else 0.0
+	_slime_sprite.texture = SLIME_BLINK if fmod(_time, 3.75) > 3.60 else SLIME_IDLE
+	_slime_sprite.modulate = Color(1, 1, 1, 0.55) if _invulnerable > 0.0 and int(_time * 12.0) % 2 == 0 else Color.WHITE
 	global_position = global_position.clamp(Vector2(-1020, -655), Vector2(1020, 655))
 	queue_redraw()
 
@@ -106,15 +126,10 @@ func collect() -> bool:
 	return upgrade
 
 func _draw() -> void:
-	var bob := sin(_time * 6.0) * 2.5
-	var fill := Color("#bcfaff") if _invulnerable > 0.0 and int(_time * 12) % 2 == 0 else Color("#44d4ee")
-	draw_circle(Vector2(0, 20), 32, Color(0, 0.04, 0.08, 0.24))
-	draw_circle(Vector2(0, bob), 32, Color("#15669b"))
-	draw_circle(Vector2(0, bob - 3), 28, fill)
-	draw_circle(Vector2(-13, bob - 15), 11, Color("#b5fcff"))
-	for sign in [-1.0, 1.0]:
-		draw_circle(Vector2(sign * 11, bob - 2), 6, Color.WHITE)
-		draw_circle(Vector2(sign * 11, bob - 1), 3, Color("#125b92"))
-	draw_arc(Vector2(0, bob + 3), 10, 0.18, PI - 0.18, 14, Color("#18578b"), 2.0)
-	if _attack_timer > 0:
-		draw_arc(Vector2.ZERO, 58, facing.angle() - 0.8, facing.angle() + 0.8, 24, Color("#bcffff"), 10.0)
+	# Soft ground shadow is drawn behind the imported slime sprite.
+	draw_circle(Vector2(0, 23), 35, Color(0.0, 0.06, 0.12, 0.12))
+	draw_circle(Vector2(0, 23), 26, Color(0.0, 0.05, 0.10, 0.18))
+	if _dash_timer > 0.0:
+		draw_arc(Vector2(0, -3), 44, 0.0, TAU, 40, Color("#b8ffff"), 3.5)
+	if _attack_timer > 0.0:
+		draw_arc(Vector2(0, -3), 59, facing.angle() - 0.85, facing.angle() + 0.85, 30, Color("#e9ffff"), 9.0)
