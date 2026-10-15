@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0.86" y2="1">
+      <stop offset="0" stop-color="#dcffff"/>
+      <stop offset="0.25" stop-color="#7cf3fa"/>
+      <stop offset="0.59" stop-color="#35c7ea"/>
+      <stop offset="1" stop-color="#1789cf"/>
+    </linearGradient>
+    <linearGradient id="shade" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#3288be" stop-opacity="0"/>
+      <stop offset="1" stop-color="#1564a4" stop-opacity="0.64"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.93"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.08"/>
+    </linearGradient>
+  </defs>
+  <!-- Original slime character sprite. Drawn for this open prototype; no anime assets copied. -->
+  <path d="M35 119 C28 101 37 75 57 64 C76 51 112 52 134 60 C155 66 173 88 169 117 C169 144 151 159 129 163 C104 169 68 163 51 153 C43 148 38 135 35 119Z"
+        fill="#12649e" stroke="#104a80" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M38 119 C31 99 43 76 61 67 C79 55 111 56 134 64 C153 70 166 89 164 116 C166 141 146 155 128 160 C104 165 70 159 54 148 C44 141 39 129 38 119Z"
+        fill="url(#body)"/>
+  <path d="M39 121 C52 147 88 158 119 150 C142 148 156 138 164 119 C163 144 146 157 127 161 C94 168 58 157 44 140 Z"
+        fill="url(#shade)"/>
+  <path d="M48 90 C56 73 74 65 97 65 C83 72 77 80 69 89 C65 98 53 106 43 103Z"
+        fill="url(#shine)" opacity="0.95"/>
+  <path d="M49 109 Q43 123 51 137" stroke="#b5ffff" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <path d="M148 91 Q157 104 155 119" stroke="#116ca7" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.45"/>
+  <ellipse cx="94" cy="152" rx="38" ry="5.2" fill="#d5feff" opacity="0.32"/>
+  <!-- eyes-start -->
+  <g fill="none" stroke="#145b81" stroke-width="4.8" stroke-linecap="round">
+    <path d="M59 111 Q69 123 82 109"/>
+    <path d="M113 109 Q125 124 138 109"/>
+  </g>
+  <!-- eyes-end -->
+  <path d="M93 135 Q99 140 106 134" stroke="#13668e" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+  <path d="M48 121 L55 119 M47 127 L53 127 M144 124 L151 121 M146 130 L154 130" stroke="#f8a7d2" stroke-width="2.4" stroke-linecap="round" opacity="0.8"/>
+  <path d="M143 68 L146 77 L155 80 L146 83 L143 92 L140 83 L131 80 L140 77Z" fill="#eaffff" opacity="0.85"/>
+  <circle cx="55" cy="65" r="3.3" fill="#ffffff" opacity="0.8"/>
+  <circle cx="160" cy="101" r="2.5" fill="#ffffff" opacity="0.7"/>
+</svg>
